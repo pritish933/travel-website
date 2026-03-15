@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Travel Beyond Boundaries</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn about Travel Beyond Boundaries — founded by Pritish Chandra Santra. 10+ years of experience crafting personalized travel itineraries. 200k+ happy travellers.">
+    <meta name="author" content="Pritish Chandra Santra">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="About Us | Travel Beyond Boundaries">
+    <meta property="og:description" content="10+ years of crafting perfect travel experiences. Meet the team behind Travel Beyond Boundaries.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80">
+    <meta property="og:site_name" content="Travel Beyond Boundaries">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .about-page-hero {
+            height: 40vh;
+            min-height: 300px;
+            background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center 30%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .about-page-hero h1 {
+            font-family: var(--font-heading);
+            font-size: 4rem;
+            color: white;
+            z-index: 2;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        
+        /* Using an alternate layout for the dedicated page, stacking content below images for focus */
+        .about-page-content {
+            padding-top: 60px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar scrolled">
+        <div class="logo">
+            <div class="logo-icon">P</div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#packages">Packages</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+            <a href="index.html" class="btn btn-purple">Back to Home</a>
+        </div>
+    </nav>
+
+    <!-- HEADER SECTION -->
+    <section class="about-page-hero">
+        <div class="hero-overlay"></div>
+        <h1 class="fade-up">Our Story</h1>
+    </section>
+
+    <!-- MAIN DARK BACKGROUND WRAPPER -->
+    <main class="dark-theme-wrapper about-page-content">
+        <!-- ABOUT US (From Homepage) -->
+        <section class="section about-section" id="about" style="padding-top: 0;">
+            <div class="container fade-up">
+                <div class="about-grid">
+                    <!-- Image Grid Side -->
+                    <div class="about-images">
+                        <div class="img-tall">
+                            <img src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80" alt="Taj Mahal">
+                        </div>
+                        <div class="img-stack">
+                            <div class="img-small">
+                                <img src="https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?auto=format&fit=crop&w=400&q=80" alt="Traveler">
+                            </div>
+                            <div class="img-small popup-box glass-effect">
+                                <div class="experience-year">
+                                    <span class="num">10+</span>
+                                    <span class="text">Years<br>Experience</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Content Side -->
+                    <div class="about-content">
+                        <h4 class="text-yellow mb-2 text-uppercase tracking-wide" style="letter-spacing: 2px;">ABOUT US</h4>
+                        <h2 class="mb-4 text-4xl" style="font-family: var(--font-heading); font-size: 3rem; line-height: 1.2;">We Make Your Travel More Joyful</h2>
+                        
+                        <p class="description mb-4">Travel Beyond Boundaries was found by Pritish Chandra Santra with a simple mission: to help people explore the beautiful world without hassle. We believe that traveling is more than just visiting a new place—it's about creating lifelong memories, experiencing unique cultures, and discovering yourself.</p>
+                        
+                        <p class="description mb-4">Whether it's a relaxing beach holiday, an adventurous trek off the beaten path, or a cultural deep dive into an ancient city, our dedicated team of experts craft itineraries personalized strictly for you. We take pride in handling all the logistical details so you can simply focus on enjoying the journey.</p>
+                        
+                        <div class="about-features mt-4">
+                            <div class="feature-item">
+                                <div class="check-icon"><i class="fa-solid fa-circle-check" style="color: var(--clr-purple);"></i></div>
+                                <span>Expert Travel Planners</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="check-icon"><i class="fa-solid fa-circle-check" style="color: var(--clr-purple);"></i></div>
+                                <span>100% Customized Itineraries</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="check-icon"><i class="fa-solid fa-circle-check" style="color: var(--clr-purple);"></i></div>
+                                <span>Best Price Guarantee</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="check-icon"><i class="fa-solid fa-circle-check" style="color: var(--clr-purple);"></i></div>
+                                <span>24/7 Customer Support</span>
+                            </div>
+                        </div>
+                        
+                        <a href="index.html#packages" class="btn btn-purple mt-4">Explore Packages</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER / STATS (Simplified) -->
+        <div class="footer-stats" style="padding-top: 40px;">
+
+        </div>
+    </main>
+
+    <!-- Javascript -->
+    <script>
+        // Intersection Observer for animations
+        const fadeElements = document.querySelectorAll('.fade-up');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        fadeElements.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Packages | Travel Beyond Boundaries</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Discover premium international & domestic travel packages. Dubai, Paris, Swiss Alps, Kerala, Golden Triangle & more. Book your dream holiday today.">
+    <meta name="author" content="Pritish Chandra Santra">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Discover Travel Packages | Travel Beyond Boundaries">
+    <meta property="og:description" content="Premium international & domestic tour packages. Dubai, Paris, Kerala, Swiss Alps & more.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1200&auto=format&fit=crop">
+    <meta property="og:site_name" content="Travel Beyond Boundaries">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Specific Styles for Discover Page */
+        .discover-page-hero {
+            height: 50vh;
+            min-height: 400px;
+            background-image: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1121&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .discover-page-hero h1 {
+            font-family: var(--font-heading);
+            font-size: 4rem;
+            color: white;
+            z-index: 2;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .filter-bar {
+            background: rgba(40, 40, 45, 0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: -40px;
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-input {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 20px;
+            border-radius: 30px;
+            color: white;
+            width: 300px;
+            outline: none;
+            font-family: var(--font-body);
+        }
+
+        .search-input:focus {
+            border-color: var(--clr-purple);
+        }
+
+        /* Category badge on each card */
+        .pkg-category-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            z-index: 2;
+        }
+        .pkg-category-badge.international {
+            background: rgba(139, 92, 246, 0.85);
+            color: #fff;
+        }
+        .pkg-category-badge.domestic {
+            background: rgba(16, 185, 129, 0.85);
+            color: #fff;
+        }
+
+        /* Hidden card state */
+        .pkg-card.hidden {
+            display: none;
+        }
+
+        /* No results message */
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--clr-text-muted);
+            grid-column: 1 / -1;
+        }
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+            opacity: 0.4;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+            margin-bottom: 80px;
+        }
+
+        .pkg-card {
+            background: rgba(30, 30, 32, 0.5);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s var(--trans-bezier);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pkg-card:hover { 
+            transform: translateY(-10px); 
+            background: rgba(40, 40, 45, 0.8);
+            border-color: rgba(255,255,255,0.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        .pkg-img {
+            height: 250px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pkg-img img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .pkg-card:hover .pkg-img img { transform: scale(1.1); }
+
+        .pkg-price {
+            position: absolute;
+            top: 15px; right: 15px;
+            background: var(--clr-yellow);
+            color: black;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            z-index: 2;
+        }
+
+        .pkg-info {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pkg-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .pkg-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            color: var(--clr-text-muted);
+        }
+
+        .pkg-meta span {
+            display: flex; align-items: center; gap: 5px;
+        }
+
+        .pkg-info p {
+            font-size: 0.9rem;
+            color: #d1d1d1;
+            margin-bottom: 25px;
+            flex: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .filter-bar { flex-direction: column; gap: 15px; }
+            .search-input { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR (Same as index.html, but modified for subpage) -->
+    <nav class="navbar scrolled">
+        <div class="logo">
+            <div class="logo-icon">P</div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#packages">Packages</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+            <a href="index.html" class="btn btn-purple">Back to Home</a>
+        </div>
+    </nav>
+
+    <!-- HEADER SECTION -->
+    <section class="discover-page-hero">
+        <div class="hero-overlay"></div>
+        <h1 class="fade-up">Discover All Packages</h1>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main class="dark-theme-wrapper" style="padding-top: 0; min-height: 60vh;">
+        <div class="container">
+            
+            <!-- Filter Bar -->
+            <div class="filter-bar fade-up">
+                <div class="booking-tabs" style="margin-bottom: 0;">
+                    <button class="active">All Destinations</button>
+                    <button>International</button>
+                    <button>Domestic</button>
+                </div>
+                <input type="text" class="search-input" placeholder="Search by city, country...">
+            </div>
+
+            <!-- Packages Grid -->
+            <div class="packages-grid fade-up delay-1">
+                
+                <!-- Package 1 - International -->
+                <div class="pkg-card" data-category="international" data-name="magical dubai safari dubai">
+                    <div class="pkg-img">
+                        <span class="pkg-price">$1,299 / person</span>
+                        <span class="pkg-category-badge international"><i class="fa-solid fa-globe"></i> International</span>
+                        <img src="https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=600&q=80" alt="Dubai">
+                    </div>
+                    <div class="pkg-info">
+                        <h3>Magical Dubai Safari</h3>
+                        <div class="pkg-meta">
+                            <span><i class="fa-solid fa-clock text-yellow"></i> 5 Days</span>
+                            <span><i class="fa-solid fa-plane text-yellow"></i> Flights Included</span>
+                        </div>
+                        <p>Experience the ultimate desert safari, breathtaking city views from Burj Khalifa, and luxury shopping.</p>
+                        <button class="btn btn-purple full-width">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Package 2 - International -->
+                <div class="pkg-card" data-category="international" data-name="swiss alps excursion switzerland">
+                    <div class="pkg-img">
+                        <span class="pkg-price">$899 / person</span>
+                        <span class="pkg-category-badge international"><i class="fa-solid fa-globe"></i> International</span>
+                        <img src="https://images.unsplash.com/photo-1549880338-65ddcdfd017b?auto=format&fit=crop&w=800&q=80" alt="Swiss Alps">
+                    </div>
+                    <div class="pkg-info">
+                        <h3>Swiss Alps Excursion</h3>
+                        <div class="pkg-meta">
+                            <span><i class="fa-solid fa-clock text-yellow"></i> 7 Days</span>
+                            <span><i class="fa-solid fa-hotel text-yellow"></i> 4 Star Hotel</span>
+                        </div>
+                        <p>A serene getaway into the heart of the mountains. Perfect for skiing, hiking, and nature lovers.</p>
+                        <button class="btn btn-purple full-width">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Package 3 - International -->
+                <div class="pkg-card" data-category="international" data-name="bora bora retreat french polynesia">
+                    <div class="pkg-img">
+                        <span class="pkg-price">$2,499 / person</span>
+                        <span class="pkg-category-badge international"><i class="fa-solid fa-globe"></i> International</span>
+                        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=800&q=80" alt="Bora Bora">
+                    </div>
+                    <div class="pkg-info">
+                        <h3>Bora Bora Retreat</h3>
+                        <div class="pkg-meta">
+                            <span><i class="fa-solid fa-clock text-yellow"></i> 8 Days</span>
+                            <span><i class="fa-solid fa-ship text-yellow"></i> Cruise Included</span>
+                        </div>
+                        <p>Luxurious overwater bungalows, crystal clear water, and endless relaxation in a tropical paradise.</p>
+                        <button class="btn btn-purple full-width">Book Now</button>
+                    </div>
+                </div>
+                
+                <!-- Package 4 - International -->
+                <div class="pkg-card" data-category="international" data-name="paris city tour france eiffel">
+                    <div class="pkg-img">
+                        <span class="pkg-price">$599 / person</span>
+                        <span class="pkg-category-badge international"><i class="fa-solid fa-globe"></i> International</span>
+                        <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=600&q=80" alt="Paris">
+                    </div>
+                    <div class="pkg-info">
+                        <h3>Paris City Tour</h3>
+                        <div class="pkg-meta">
+                            <span><i class="fa-solid fa-clock text-yellow"></i> 4 Days</span>
+                            <span><i class="fa-solid fa-camera text-yellow"></i> Guide Included</span>
+                        </div>
+                        <p>Explore the romance of Paris, from the Eiffel Tower to the Louvre, with expert local guides.</p>
+                        <button class="btn btn-purple full-width">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Package 5 - Domestic -->
+                <div class="pkg-card" data-category="domestic" data-name="heritage of bengal kolkata darjeeling india">
+                    <div class="pkg-img">
+                        <span class="pkg-price">$450 / person</span>
+                        <span class="pkg-category-badge domestic"><i class="fa-solid fa-map-pin"></i> Domestic</span>
+                        <img src="https://images.unsplash.com/photo-1536421469767-80559bb6f5e1?q=80&w=1170&auto=format&fit=crop" alt="Kolkata">
+                    </div>
+                    <div class="pkg-info">
+                        <h3>Heritage of Bengal</h3>
+                        <div class="pkg-meta">
+                            <span><i class="fa-solid fa-clock text-yellow"></i> 6 Days</span>
+                            <span><i class="fa-solid fa-bus text-yellow"></i> Transport Included</span>
+                        </div>
+                        <p>Dive deep into the rich culture of West Bengal, from Howrah Bridge to the hills of Darjeeling.</p>
+                        <button class="btn btn-purple full-width">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Package 6 - International -->
+                <div class="pkg-card" data-category="international" data-name="great wall expedition china beijing">
+                    <div class="pkg-img">
+                        <span class="pkg-price">$1,100 / person</span>
+                        <span class="pkg-category-badge international"><i class="fa-solid fa-globe"></i> International</span>
+                        <img src="https://images.unsplash.com/photo-1538428494232-9c0d8a3ab403?q=80&w=1170&auto=format&fit=crop" alt="China">
+                    </div>
+                    <div class="pkg-info">
+                        <h3>Great Wall Expedition</h3>
+                        <div class="pkg-meta">
+                            <span><i class="fa-solid fa-clock text-yellow"></i> 10 Days</span>
+                            <span><i class="fa-solid fa-utensils text-yellow"></i> Meals Included</span>
+                        </div>
+                        <p>Walk the ancient paths of the Great Wall and experience the vibrant modern cities of China.</p>
+                        <button class="btn btn-purple full-width">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Package 7 - Domestic -->
+                <div class="pkg-card" data-category="domestic" data-name="golden triangle tour delhi agra jaipur india">
+                    <div class="pkg-img">
+                        <span class="pkg-price">$320 / person</span>
+                        <span class="pkg-category-badge domestic"><i class="fa-solid fa-map-pin"></i> Domestic</span>
+                        <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=800&q=80" alt="Taj Mahal">
+                    </div>
+                    <div class="pkg-info">
+                        <h3>Golden Triangle Tour</h3>
+                        <div class="pkg-meta">
+                            <span><i class="fa-solid fa-clock text-yellow"></i> 5 Days</span>
+                            <span><i class="fa-solid fa-bus text-yellow"></i> Transport Included</span>
+                        </div>
+                        <p>Explore the iconic trio of Delhi, Agra, and Jaipur — from the Taj Mahal to Rajasthan's royal forts.</p>
+                        <button class="btn btn-purple full-width">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Package 8 - Domestic -->
+                <div class="pkg-card" data-category="domestic" data-name="kerala backwaters houseboat india">
+                    <div class="pkg-img">
+                        <span class="pkg-price">$380 / person</span>
+                        <span class="pkg-category-badge domestic"><i class="fa-solid fa-map-pin"></i> Domestic</span>
+                        <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80" alt="Kerala">
+                    </div>
+                    <div class="pkg-info">
+                        <h3>Kerala Backwaters Escape</h3>
+                        <div class="pkg-meta">
+                            <span><i class="fa-solid fa-clock text-yellow"></i> 6 Days</span>
+                            <span><i class="fa-solid fa-ship text-yellow"></i> Houseboat Stay</span>
+                        </div>
+                        <p>Glide through lush green backwaters on a traditional houseboat and enjoy the tranquil beauty of God's Own Country.</p>
+                        <button class="btn btn-purple full-width">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- No Results Message -->
+                <div class="no-results" id="noResults">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <p>No packages found matching your search.</p>
+                </div>
+
+            </div>
+        </div>
+        
+        <!-- FOOTER (Simplified) -->
+        <div class="footer-stats" style="padding: 40px 0;">
+
+        </div>
+    </main>
+
+    <!-- Javascript -->
+    <script>
+        // Intersection Observer for animations
+        const fadeElements = document.querySelectorAll('.fade-up');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        fadeElements.forEach(el => observer.observe(el));
+
+        // ── Filter & Search Logic ─────────────────────────────────────
+        const filterBtns = document.querySelectorAll('.booking-tabs button');
+        const cards      = document.querySelectorAll('.pkg-card');
+        const searchInput = document.querySelector('.search-input');
+        const noResults   = document.getElementById('noResults');
+
+        let activeCategory = 'all';
+
+        function applyFilters() {
+            const query = searchInput.value.trim().toLowerCase();
+            let visible = 0;
+
+            cards.forEach(card => {
+                const cat  = card.dataset.category;                   // 'international' | 'domestic'
+                const name = (card.dataset.name || '').toLowerCase();
+
+                const categoryMatch = (activeCategory === 'all') || (cat === activeCategory);
+                const searchMatch   = !query || name.includes(query);
+
+                if (categoryMatch && searchMatch) {
+                    card.classList.remove('hidden');
+                    visible++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            noResults.style.display = visible === 0 ? 'block' : 'none';
+        }
+
+        // Tab click handler
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const label = btn.textContent.trim().toLowerCase();
+                if (label === 'international') activeCategory = 'international';
+                else if (label === 'domestic')  activeCategory = 'domestic';
+                else                            activeCategory = 'all';
+
+                applyFilters();
+            });
+        });
+
+        // Search input handler
+        searchInput.addEventListener('input', applyFilters);
+    </script>
+</body>
+</html>

@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Beyond Boundaries | Premium Tour & Travel Packages</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Travel Beyond Boundaries offers premium international & domestic tour packages. Explore Turkey, Paris, Maldives, Darjeeling & more. Expert travel planners, best price guarantee.">
+    <meta name="keywords" content="travel packages, international tours, domestic tours, Turkey tour, Paris tour, Maldives, West Bengal travel, Pritish Santra">
+    <meta name="author" content="Pritish Chandra Santra">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / LinkedIn / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://travelbeyondboundaries.netlify.app/">
+    <meta property="og:title" content="Travel Beyond Boundaries | Premium Tour Packages">
+    <meta property="og:description" content="Discover handcrafted travel experiences across the globe. From Paris to the Maldives, we make your dream trip a reality.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1200&auto=format&fit=crop">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Travel Beyond Boundaries">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Travel Beyond Boundaries | Premium Tour Packages">
+    <meta name="twitter:description" content="Discover handcrafted travel experiences across the globe.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1200&auto=format&fit=crop">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Firebase SDK (v9 compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+    <!-- Your Firebase Config -->
+    <script src="firebase-config.js"></script>
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+    <!-- PAGE LOADER -->
+    <div class="page-loader" id="page-loader">
+        <div class="loader-inner">
+            <div class="loader-logo">P</div>
+            <div class="loader-bar"><div class="loader-progress"></div></div>
+        </div>
+    </div>
+
+    <!-- SCROLL PROGRESS BAR -->
+    <div class="scroll-progress-bar" id="scroll-progress"></div>
+
+    <!-- BACK TO TOP BUTTON -->
+    <button class="back-to-top" id="back-to-top" title="Back to top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <!-- Parallax Background -->
+        <div class="hero-bg-wrapper">
+            <div class="hero-parallax" id="hero-parallax" style="background-color: #19181A;">
+                <video autoplay loop muted playsinline class="hero-bg-video" poster="https://plus.unsplash.com/premium_photo-1683140766566-3ecdcf5a02e0?q=80&w=1170&auto=format&fit=crop">
+                    <source src="hero-video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+        <!-- Overlay on image to ensure text is readable -->
+        <div class="hero-overlay"></div>
+        
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="logo">
+                <div class="logo-icon">P</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#packages">Packages</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <!-- Guest state: Login / Sign Up -->
+            <div class="nav-right" id="nav-guest">
+                <a href="#login" class="nav-login-link">Login</a>
+                <a href="#signup" class="btn-signup">Sign Up</a>
+                
+                <!-- Mobile Menu Toggle -->
+                <button class="mobile-menu-btn" id="mobile-menu-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+            <!-- Logged-in state: User avatar + dropdown -->
+            <div class="nav-right nav-user-area" id="nav-user" style="display:none;">
+                <div class="user-menu-trigger" id="user-menu-trigger">
+                    <img src="" alt="User Avatar" class="user-avatar" id="nav-user-avatar">
+                    <span class="user-name" id="nav-user-name"></span>
+                    <i class="fa-solid fa-chevron-down" style="font-size:0.7rem; opacity:0.7;"></i>
+                </div>
+                <div class="user-dropdown" id="user-dropdown">
+                    <div class="user-dropdown-header">
+                        <img src="" alt="" class="dropdown-avatar" id="dropdown-avatar">
+                        <div>
+                            <div class="dropdown-name" id="dropdown-name"></div>
+                            <div class="dropdown-email" id="dropdown-email"></div>
+                        </div>
+                    </div>
+                    <hr class="dropdown-divider">
+                    <a href="profile.html" class="dropdown-item">
+                        <i class="fa-solid fa-user"></i> My Profile
+                    </a>
+                    <hr class="dropdown-divider">
+                    <button class="dropdown-item" id="signout-btn">
+                        <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+                    </button>
+                </div>
+                <!-- Mobile Menu Toggle (Logged In) -->
+                <button class="mobile-menu-btn logged-in-menu-btn" id="mobile-menu-btn-user">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <div class="hero-text-area">
+                <h1 class="main-title">Travel <br> Beyond <br> Boundaries</h1>
+                <div class="hero-buttons">
+                    <a href="discover.html" class="btn btn-purple">Discover More</a>
+                    <button class="btn btn-play">
+                        <span class="play-icon"><i class="fa-solid fa-play"></i></span>
+                        Watch Our Story
+                    </button>
+                </div>
+            </div>
+
+            <!-- Floating Right Side Images -->
+            <div class="floating-images">
+                <a href="#packages" title="Explore Japan" class="float-img img1 link-wrapper">
+                    <img src="https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?auto=format&fit=crop&w=400&q=80" alt="Mountain with Pink Flowers">
+                </a>
+                <a href="#packages" title="Explore India" class="float-img img2 link-wrapper">
+                    <img src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=400&q=80" alt="Taj Mahal">
+                </a>
+                <a href="#packages" title="Explore Europe" class="float-img img3 link-wrapper">
+                    <img src="https://images.unsplash.com/photo-1491557345352-5929e343eb89?auto=format&fit=crop&w=400&q=80" alt="European View">
+                </a>
+            </div>
+        </div>
+
+        <!-- Floating Booking Widget -->
+        <div class="booking-widget-wrapper">
+            <div class="booking-tabs">
+                <button class="active">Flights</button>
+                <button>Hotels</button>
+            </div>
+            <div class="booking-widget">
+                <div class="widget-field" onclick="document.getElementById('loc-select').click()">
+                    <label for="loc-select">Type of location <i class="fa-solid fa-chevron-down text-xs"></i></label>
+                    <select id="loc-select">
+                        <option value="" disabled selected>Where are you going?</option>
+                        <option value="paris">Paris, France</option>
+                        <option value="dubai">Dubai, UAE</option>
+                        <option value="bali">Bali, Indonesia</option>
+                        <option value="tokyo">Tokyo, Japan</option>
+                        <option value="newyork">New York, USA</option>
+                        <option value="swiss">Swiss Alps</option>
+                        <option value="maldives">Maldives</option>
+                    </select>
+                </div>
+                <div class="widget-field" onclick="document.getElementById('date-select').showPicker()">
+                    <label for="date-select">Select date <i class="fa-regular fa-calendar text-xs"></i></label>
+                    <input type="date" id="date-select" style="cursor: pointer;">
+                </div>
+                <div class="widget-field" onclick="document.getElementById('member-select').click()">
+                    <label for="member-select">Add Members <i class="fa-solid fa-chevron-down text-xs"></i></label>
+                    <select id="member-select">
+                        <option value="1">1 Adult</option>
+                        <option value="2" selected>2 Adults - 0 Children</option>
+                        <option value="3">2 Adults - 1 Child</option>
+                        <option value="4">2 Adults - 2 Children</option>
+                        <option value="5">3+ Adults</option>
+                        <option value="group">Group / Family</option>
+                    </select>
+                </div>
+                <div class="widget-field" onclick="document.getElementById('budget-select').click()">
+                    <label for="budget-select">Setup budget <i class="fa-solid fa-chevron-down text-xs"></i></label>
+                    <select id="budget-select">
+                        <option value="1" selected>₹10k - ₹50k</option>
+                        <option value="2">₹50k - ₹1 Lakh</option>
+                        <option value="3">₹1 Lakh - ₹3 Lakh</option>
+                        <option value="4">₹3 Lakh+</option>
+                    </select>
+                </div>
+                <a href="flights.html" class="btn btn-yellow widget-search" style="text-align: center; justify-content: center; display: flex;">Search Flights</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN DARK BACKGROUND WRAPPER -->
+    <main class="dark-theme-wrapper">
+        
+        <!-- INTERNATIONAL SECTION -->
+        <section class="section international-section" id="packages">
+            <div class="container intl-container">
+                <!-- Cards Slider -->
+                <div class="intl-cards">
+                    <!-- Nav button left -->
+                    <button class="slider-btn left"><i class="fa-solid fa-chevron-left"></i></button>
+
+                    <div class="cards-wrapper">
+                        <a href="destination.html?id=turkey" class="place-card">
+                            <div class="card-img">
+                                <img src="https://images.unsplash.com/photo-1527838832700-5059252407fa?auto=format&fit=crop&w=600&q=80" alt="Turkey">
+                            </div>
+                            <div class="card-info">
+                                <h3>Turkey <span class="stars">⭐⭐⭐⭐⭐</span></h3>
+                                <p>Turkey is a beautiful country whose history spans early Greek, Persian, Roman, and Ottoman empires. A key destination point...</p>
+                            </div>
+                        </a>
+
+                        <a href="destination.html?id=disneyland" class="place-card">
+                            <div class="card-img">
+                                <img src="https://images.unsplash.com/photo-1590144662036-33bf0ebd2c7f?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Disneyland">
+                            </div>
+                            <div class="card-info">
+                                <h3>Disneyland <span class="stars">⭐⭐⭐⭐⭐</span></h3>
+                                <p>One of the most famous theme parks in the world, known for its magical atmosphere, characters, and vibrant attractions...</p>
+                            </div>
+                        </a>
+
+                        <a href="destination.html?id=china" class="place-card">
+                            <div class="card-img">
+                                <img src="https://images.unsplash.com/photo-1538428494232-9c0d8a3ab403?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="China">
+                            </div>
+                            <div class="card-info">
+                                <h3>China <span class="stars">⭐⭐⭐⭐⭐</span></h3>
+                                <p>A fascinating country known for its ancient history, rich culture, and modern marvels like the Great Wall and vibrant cityscapes...</p>
+                            </div>
+                        </a>
+
+                        <!-- 3 NEW CARDS -->
+                        <a href="destination.html?id=london" class="place-card">
+                            <div class="card-img">
+                                <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=600&q=80" alt="London">
+                            </div>
+                            <div class="card-info">
+                                <h3>London <span class="stars">⭐⭐⭐⭐⭐</span></h3>
+                                <p>A modern city with a history stretching back to Roman times. Explore the iconic Big Ben, London Eye, and historic museums.</p>
+                            </div>
+                        </a>
+
+                        <a href="destination.html?id=paris" class="place-card">
+                            <div class="card-img">
+                                <img src="https://plus.unsplash.com/premium_photo-1718035557075-5111d9d906d2?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Paris">
+                            </div>
+                            <div class="card-info">
+                                <h3>Paris <span class="stars">⭐⭐⭐⭐⭐</span></h3>
+                                <p>The city of love! Renowned for its cafe culture, fashion, and the timeless Eiffel Tower standing tall in the beautiful skyline.</p>
+                            </div>
+                        </a>
+
+                        <a href="destination.html?id=maldives" class="place-card">
+                            <div class="card-img">
+                                <img src="https://images.unsplash.com/photo-1573843981267-be1999ff37cd?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Maldives">
+                            </div>
+                            <div class="card-info">
+                                <h3>Maldives <span class="stars">⭐⭐⭐⭐⭐</span></h3>
+                                <p>A tropical paradise famous for its crystal clear waters, white sandy beaches, and luxury overwater bungalows.</p>
+                            </div>
+                        </a>
+
+                        <!-- NEW CARDS REQUESTED -->
+                        <a href="destination.html?id=kyoto" class="place-card">
+                            <div class="card-img">
+                                <img src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?q=80&w=1170&auto=format&fit=crop" alt="Kyoto">
+                            </div>
+                            <div class="card-info">
+                                <h3>Kyoto <span class="stars">⭐⭐⭐⭐⭐</span></h3>
+                                <p>Step back in time in Japan's historical heart. Walk among serene bamboo forests, stunning temples, and vibrant shrines.</p>
+                            </div>
+                        </a>
+
+                        <a href="destination.html?id=santorini" class="place-card">
+                            <div class="card-img">
+                                <img src="https://plus.unsplash.com/premium_photo-1661964149725-fbf14eabd38c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Santorini">
+                            </div>
+                            <div class="card-info">
+                                <h3>Santorini <span class="stars">⭐⭐⭐⭐⭐</span></h3>
+                                <p>Experience the magic of Greece with its iconic white-washed houses, blue domes, and breathtaking sunset views over the Aegean Sea.</p>
+                            </div>
+                        </a>
+
+                        <a href="destination.html?id=newyork" class="place-card">
+                            <div class="card-img">
+                                <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?q=80&w=1170&auto=format&fit=crop" alt="New York">
+                            </div>
+                            <div class="card-info">
+                                <h3>New York <span class="stars">⭐⭐⭐⭐⭐</span></h3>
+                                <p>The city that never sleeps! Dive into the hustle of Times Square, stroll through Central Park, and marvel at the skyline.</p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Nav button right -->
+                    <button class="slider-btn right"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+
+                <!-- Text Info -->
+                <div class="intl-text fade-up delay-3">
+                    <h2>International</h2>
+                    <p class="description">
+                        International travel encompasses discovering destinations beyond one's home country. It introduces individuals to varying cultures, historic landmarks, exotic cuisines, and global perspectives.<br><br>
+                        With a myriad of choices across continents, international travel offers unparalleled opportunities to explore the world's most spectacular and iconic sights while broadening one's horizons.
+                    </p>
+                    
+                    <ul class="stats-list">
+                        <li><span>50+</span> Destinations</li>
+                        <li><span>200+</span> Hotels</li>
+                        <li><span>200k</span> Tourists</li>
+                    </ul>
+
+                    <a href="discover.html" class="discover-more" style="position: relative; z-index: 50; display: inline-block; padding: 12px 28px; border-radius: 30px; font-weight: 600; font-size: 0.95rem; background: var(--clr-yellow); color: #000; text-decoration: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 20px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 215, 0, 0.4)';">Discover More</a>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+        <!-- EXPLORE WEST BENGAL -->
+        <section class="section west-bengal-section fade-up">
+            <div class="container">
+                <div class="section-header-inline">
+                    <h2 class="section-title inline-title">Explore West Bengal</h2>
+                    <div class="title-line"></div>
+                </div>
+
+                <!-- Bento Grid -->
+                <div class="bento-grid">
+                    <a href="destination.html?id=durgapuja" class="bento-item main-bg d-puja">
+                        <img src="https://images.unsplash.com/photo-1768465338149-1a3e2bb6e5fa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Durgapuja">
+                        <div class="badge">Durgapuja</div>
+                    </a>
+                    
+                    <div class="bento-side-grid">
+                        <a href="destination.html?id=kolkata" class="bento-item">
+                            <img src="https://images.unsplash.com/photo-1536421469767-80559bb6f5e1?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Howrah Bridge">
+                            <div class="badge">Howrah Bridge</div>
+                        </a>
+                        <a href="destination.html?id=darjeeling" class="bento-item">
+                            <img src="https://images.unsplash.com/photo-1671711847762-b8308b444a42?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Darjeeling">
+                            <div class="badge">Darjeeling</div>
+                        </a>
+                        <a href="destination.html?id=darjeeling" class="bento-item">
+                            <img src="https://images.unsplash.com/photo-1603813507806-0d311a6eecd1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Clock Tower">
+                            <div class="badge">Clock Tower</div>
+                        </a>
+                        <a href="destination.html?id=victoria" class="bento-item">
+                            <img src="https://images.unsplash.com/photo-1600080077823-a44592513861?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Victoria Memorial">
+                            <div class="badge">Victoria Memorial</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GOOGLE REVIEWS -->
+        <section class="section reviews-section fade-up">
+            <div class="container container-center">
+                <h2 class="section-title">Google Reviews</h2>
+                <div class="reviews-grid">
+                    <div class="review-card">
+                        <div class="stars">⭐⭐⭐⭐⭐</div>
+                        <p class="quote">"Amazing experience! Everything was perfectly organized, from flights to hotels. Our trip was smooth and memorable. Highly recommended!"</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="stars">⭐⭐⭐⭐⭐</div>
+                        <p class="quote">"One of the best travel experiences I've had. The itinerary was well-planned and we got to explore so many beautiful places."</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="stars">⭐⭐⭐⭐⭐</div>
+                        <p class="quote">"The tour package was fantastic. Great destinations, comfortable stays, and very helpful support throughout the journey."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT US -->
+        <section class="section contact-section" id="contact">
+            <div class="container fade-up">
+                <div class="section-header-inline">
+                    <h2 class="section-title inline-title">Contact Us</h2>
+                    <div class="title-line"></div>
+                </div>
+                
+                <div class="contact-wrapper">
+                    <!-- Contact Details Side -->
+                    <div class="contact-info glass-effect">
+                        <h3>Get In Touch</h3>
+                        <p class="description mb-4">Planning your next adventure or have questions about our packages? We'd love to hear from you!</p>
+                        
+                        <div class="info-item">
+                            <div class="icon-circle"><i class="fa-solid fa-user"></i></div>
+                            <div>
+                                <h4>Founder</h4>
+                                <p>Pritish Chandra Santra</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="icon-circle"><i class="fa-solid fa-phone"></i></div>
+                            <div>
+                                <h4>Phone Number</h4>
+                                <p>+91 9332898523</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="icon-circle"><i class="fa-solid fa-envelope"></i></div>
+                            <div>
+                                <h4>Email Address</h4>
+                                <p>pritishsantra068@gmail.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="social-links mt-4">
+                            <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Form Side -->
+                    <div class="contact-form-side">
+                        <form class="contact-form" id="contact-form">
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label>First Name</label>
+                                    <input type="text" id="contact-firstname" name="firstname" placeholder="John" required>
+                                </div>
+                                <div class="input-group">
+                                    <label>Last Name</label>
+                                    <input type="text" id="contact-lastname" name="lastname" placeholder="Doe" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label>Email ID</label>
+                                    <input type="email" id="contact-email" name="email" placeholder="john@example.com" required>
+                                </div>
+                                <div class="input-group">
+                                    <label>Phone No.</label>
+                                    <input type="tel" id="contact-phone" name="phone" placeholder="+91 XXXXX XXXXX">
+                                </div>
+                            </div>
+                            
+                            <div class="input-group border-fix">
+                                <label>Message</label>
+                                <textarea id="contact-message" name="message" rows="4" placeholder="How can we help you plan your dream trip?" required></textarea>
+                            </div>
+
+                            <!-- Success / Error feedback -->
+                            <div id="contact-success" style="display:none; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); border-radius:10px; padding:12px 16px; margin-top:12px; color:#6ee7b7; font-size:0.9rem;">
+                                <i class="fa-solid fa-circle-check" style="margin-right:8px;"></i>Message sent! We'll get back to you shortly.
+                            </div>
+                            <div id="contact-error" style="display:none; color:#ff6b6b; font-size:0.85rem; margin-top:10px;"></div>
+                            
+                            <button type="submit" id="contact-btn" class="btn btn-purple mt-2">Send Message <i class="fa-solid fa-paper-plane ms-2"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COUNTER STATS FOOTER AREA -->
+        <div class="footer-stats">
+            <div class="container footer-grid fade-up">
+                <div class="stat-item">
+                    <div class="stat-num counter" data-target="4.7" data-suffix="" data-decimal="1">0</div>
+                    <div class="stat-text">Google Rating</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num counter" data-target="200397" data-suffix="+" data-format="comma">0</div>
+                    <div class="stat-text">Satisfied Travellers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num counter" data-target="180" data-suffix="+">0</div>
+                    <div class="stat-text">Tour Captains</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num counter" data-target="50" data-suffix="+">0</div>
+                    <div class="stat-text">Destinations</div>
+                </div>
+            </div>
+            
+
+        </div>
+
+        <!-- FULL FOOTER -->
+        <footer class="site-footer">
+            <div class="container">
+                <div class="footer-grid">
+
+                    <!-- Brand -->
+                    <div class="footer-brand">
+                        <div class="footer-logo"><div class="logo-icon">P</div> Travel Beyond Boundaries</div>
+                        <p class="footer-tagline">Crafting unforgettable journeys across the globe. Your dream trip, our expertise.</p>
+                        <div class="footer-socials">
+                            <a href="https://www.linkedin.com/in/pritish-chandra-santra-4a8ab2385" target="_blank" class="fsocial-icon" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#" class="fsocial-icon" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#" class="fsocial-icon" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="fsocial-icon" title="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="footer-links">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#packages">Packages</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="discover.html">Discover</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Destinations -->
+                    <div class="footer-links">
+                        <h4>Top Destinations</h4>
+                        <ul>
+                            <li><a href="destination.html?id=turkey">Turkey</a></li>
+                            <li><a href="destination.html?id=paris">Paris</a></li>
+                            <li><a href="destination.html?id=maldives">Maldives</a></li>
+                            <li><a href="destination.html?id=kyoto">Kyoto</a></li>
+                            <li><a href="destination.html?id=santorini">Santorini</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact -->
+                    <div class="footer-links">
+                        <h4>Contact</h4>
+                        <ul>
+                            <li><i class="fa-solid fa-phone" style="color:var(--clr-yellow); margin-right:8px;"></i>+91 9332898523</li>
+                            <li><i class="fa-solid fa-envelope" style="color:var(--clr-yellow); margin-right:8px;"></i>pritishsantra068@gmail.com</li>
+                            <li><i class="fa-solid fa-location-dot" style="color:var(--clr-yellow); margin-right:8px;"></i>West Bengal, India</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="footer-bottom">
+                    <p>© 2025 Travel Beyond Boundaries. Designed & Built by <a href="https://www.linkedin.com/in/pritish-chandra-santra-4a8ab2385" target="_blank" class="text-yellow">Pritish Chandra Santra</a>.</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- LOGIN MODAL -->
+    <div class="modal-overlay" id="login-modal">
+        <div class="modal-box glass-effect fade-up">
+            <button class="close-btn" id="close-login"><i class="fa-solid fa-xmark"></i></button>
+
+            <!-- LOGIN VIEW -->
+            <div id="login-view">
+                <div class="modal-header">
+                    <h2>Welcome Back</h2>
+                    <p>Login to continue your journey</p>
+                </div>
+                <form class="signup-form" id="login-form">
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" id="login-email" placeholder="john@example.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="login-password" placeholder="••••••••" required>
+                    </div>
+                    <div style="text-align: right; margin-top: -10px; margin-bottom: 20px;">
+                        <a href="#" class="text-yellow" id="forgot-password-link" style="font-size: 0.8rem;">Forgot Password?</a>
+                    </div>
+                    <div id="login-error" style="color:#ff6b6b; font-size:0.82rem; margin-bottom:10px; display:none;"></div>
+                    <button type="submit" class="btn btn-purple full-width">Login</button>
+                </form>
+                <div class="modal-footer">
+                    <p>Don't have an account? <a href="#signup" class="text-yellow">Sign Up here</a></p>
+                    <div class="social-login">
+                        <p>Or continue with</p>
+                        <button class="google-signin-btn" id="google-login-btn">
+                            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" width="20" height="20">
+                            Continue with Google
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FORGOT PASSWORD VIEW -->
+            <div id="forgot-view" style="display:none;">
+                <div class="modal-header">
+                    <h2>Reset Password</h2>
+                    <p>Enter your email and we'll send a reset link</p>
+                </div>
+                <div class="input-group" style="margin-bottom: 16px;">
+                    <label>Email Address</label>
+                    <input type="email" id="reset-email" placeholder="john@example.com">
+                </div>
+                <div id="reset-success" style="display:none; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); border-radius:10px; padding:12px 16px; margin-bottom:14px; color:#6ee7b7; font-size:0.88rem;">
+                    <i class="fa-solid fa-circle-check" style="margin-right:8px;"></i>Reset link sent! Check your inbox.
+                </div>
+                <div id="reset-error" style="display:none; color:#ff6b6b; font-size:0.82rem; margin-bottom:12px;"></div>
+                <button id="send-reset-btn" class="btn btn-purple full-width">Send Reset Link <i class="fa-solid fa-envelope" style="margin-left:8px;"></i></button>
+                <div style="text-align:center; margin-top:16px;">
+                    <a href="#" id="back-to-login" class="text-yellow" style="font-size:0.85rem;"><i class="fa-solid fa-arrow-left" style="margin-right:6px;"></i>Back to Login</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- BOOK NOW MODAL -->
+    <div class="modal-overlay" id="book-modal">
+        <div class="modal-box glass-effect" style="max-width:500px;">
+            <button class="close-btn" id="close-book"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-header">
+                <h2>Book Your Trip ✈️</h2>
+                <p id="book-destination-label">Fill in your details and we'll get back to you!</p>
+            </div>
+            <form id="book-form">
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Your Name</label>
+                        <input type="text" id="book-name" placeholder="Pritish Santra" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Phone Number</label>
+                        <input type="tel" id="book-phone" placeholder="+91 XXXXXXXXXX" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="book-email" placeholder="you@email.com" required>
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Travel Date</label>
+                        <input type="date" id="book-date" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Travellers</label>
+                        <input type="number" id="book-travellers" min="1" max="20" value="2" required>
+                    </div>
+                </div>
+                <div id="book-success" style="display:none; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); border-radius:10px; padding:12px 16px; margin-bottom:14px; color:#6ee7b7; font-size:0.9rem;">
+                    <i class="fa-solid fa-circle-check" style="margin-right:8px;"></i>Inquiry sent! We'll contact you within 24 hours. 🎉
+                </div>
+                <div id="book-error" style="display:none; color:#ff6b6b; font-size:0.82rem; margin-bottom:10px;"></div>
+                <button type="submit" id="book-btn" class="btn btn-purple full-width">Send Inquiry <i class="fa-solid fa-paper-plane" style="margin-left:8px;"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SIGN UP MODAL -->
+    <div class="modal-overlay" id="signup-modal">
+        <div class="modal-box glass-effect fade-up">
+            <button class="close-btn" id="close-signup"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-header">
+                <h2>Create Account</h2>
+                <p>Join us to travel beyond boundaries</p>
+            </div>
+            <form class="signup-form" id="signup-form">
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="signup-name" placeholder="John Doe" required>
+                </div>
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="signup-email" placeholder="john@example.com" required>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="signup-password" placeholder="••••••••" required>
+                </div>
+                <div id="signup-error" style="color:#ff6b6b; font-size:0.82rem; margin-bottom:10px; display:none;"></div>
+                <button type="submit" class="btn btn-purple full-width">Sign Up</button>
+            </form>
+            <div class="modal-footer">
+                <p>Already have an account? <a href="#login" class="text-yellow">Login here</a></p>
+                <div class="social-login">
+                    <p>Or continue with</p>
+                    <button class="google-signin-btn" id="google-signup-btn">
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" width="20" height="20">
+                        Continue with Google
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIDEO MODAL -->
+    <div class="video-overlay" id="video-modal">
+        <div class="video-modal-content">
+            <button class="close-video-btn" id="close-video"><i class="fa-solid fa-xmark"></i></button>
+            <div class="iframe-container">
+                <video id="story-video" width="100%" height="100%" controls style="position: absolute; top: 0; left: 0; outline: none; border-radius: 12px; background: black;">
+                    <source src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

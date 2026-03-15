@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destination Details | Travel Beyond Boundaries</title>
+    <meta name="description" content="Explore world-class travel destinations with Travel Beyond Boundaries. Detailed packages, pricing, and inclusions for Turkey, Paris, Maldives, Kyoto & more.">
+    <meta name="author" content="Pritish Chandra Santra">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ---- Reset to prevent scrolling ---- */
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            overflow: hidden !important;
+            max-height: 100vh !important;
+        }
+
+        /* ---- Full-screen background wrapper ---- */
+        .dest-wrapper {
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(to top, #0a0a0f 25%, rgba(10,10,15,0.2) 70%), 
+                        url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            padding: 70px 4% 15px 4%;
+            overflow: hidden;
+        }
+
+        /* ---- Navbar tweaks ---- */
+        .navbar {
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 15, 0.7) !important;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        /* ---- Heading block ---- */
+        .dest-header {
+            flex-shrink: 0;
+            padding: 20px 0 15px 0;
+        }
+
+        .dest-title {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            color: white;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.9);
+            margin: 0;
+            line-height: 1.1;
+        }
+
+        .dest-subtitle {
+            color: rgba(255,255,255,0.75);
+            font-size: 1.05rem;
+            margin-top: 6px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        /* ---- Two-column cards: fill remaining height ---- */
+        .dest-content {
+            flex: 1;
+            min-height: 0; /* CRITICAL: allows flex child to shrink below content size */
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        /* ---- Left info card ---- */
+        .dest-main-info {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 22px 28px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            overflow-y: auto; /* scroll inside card only if text overflows */
+            min-height: 0;
+        }
+
+        .dest-main-info h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #6c3fc5;
+            margin: 0 0 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .dest-main-info h3.section-sep {
+            margin-top: 18px;
+        }
+
+        .dest-main-info p {
+            font-size: 0.98rem;
+            line-height: 1.65;
+            color: #333;
+            margin: 0;
+        }
+
+        .dest-main-info ul {
+            margin: 4px 0 0 18px;
+            padding: 0;
+            color: #444;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+
+        /* ---- Right pricing card ---- */
+        .dest-sidebar {
+            background: rgba(10, 10, 20, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 22px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .sidebar-label {
+            color: #aaa;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+
+        .price-tag {
+            font-size: 2.3rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .price-tag span {
+            font-size: 0.9rem;
+            color: #bbb;
+            font-weight: 400;
+        }
+
+        .sidebar-details {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 14px;
+            margin-bottom: 14px;
+        }
+
+        .sidebar-details p {
+            color: #eee;
+            font-size: 0.92rem;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-details i {
+            color: #f5c842;
+            width: 22px;
+        }
+
+        .book-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            text-align: center;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            color: white;
+            border: none;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.5);
+        }
+
+        @media (max-width: 900px) {
+            html, body { overflow: auto !important; height: auto !important; max-height: none !important; }
+            .dest-wrapper { height: auto !important; min-height: 100vh; padding-top: 100px; }
+            .dest-content { grid-template-columns: 1fr; }
+            .dest-title { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body class="dark-theme-wrapper">
+
+    <!-- Navbar -->
+    <nav class="navbar solid-nav">
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="discover.html">Discover</a></li>
+            <li><a href="flights.html">Flights</a></li>
+            <li><a href="hotels.html">Hotels</a></li>
+        </ul>
+        <div class="nav-right">
+            <a href="index.html" class="btn-signup">Back to Home</a>
+        </div>
+    </nav>
+
+    <!-- Full-screen destination view -->
+    <div class="dest-wrapper">
+
+        <!-- Title Block -->
+        <div class="dest-header">
+            <h1 class="dest-title">World Class Destinations</h1>
+            <p class="dest-subtitle">Your dream vacation starts here.</p>
+        </div>
+
+        <!-- Cards Row -->
+        <div class="dest-content">
+
+            <!-- Overview + What's Included -->
+            <div class="dest-main-info">
+                <h3>Overview</h3>
+                <p>Welcome to one of the most breathtaking destinations on the planet. From rich cultural heritage to stunning landscapes, this package is crafted to give you an unforgettable experience.</p>
+
+                <h3 class="section-sep">What's Included?</h3>
+                <ul>
+                    <li>Premium Hotel Accommodation</li>
+                    <li>Daily Breakfast &amp; Dinner</li>
+                    <li>Exclusive Guided City Tours</li>
+                    <li>Airport Transfers &amp; Private Transport</li>
+                    <li>24/7 Concierge Support</li>
+                </ul>
+            </div>
+
+            <!-- Pricing Sidebar -->
+            <div class="dest-sidebar">
+                <div>
+                    <p class="sidebar-label">Starting From</p>
+                    <div class="price-tag">₹45,999 <span>/ person</span></div>
+
+                    <div class="sidebar-details">
+                        <p><i class="fa-regular fa-clock"></i> <strong>5 Days / 4 Nights</strong></p>
+                        <p><i class="fa-solid fa-plane"></i> <strong>Direct Flights Available</strong></p>
+                        <p><i class="fa-solid fa-star"></i> <strong>5 Star Ratings</strong></p>
+                    </div>
+                </div>
+                <button class="book-btn" onclick="alert('Booking portal opening soon!')">Book Package Now</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Destination Data
+        const destinationsData = {
+            'turkey': {
+                title: 'Turkey',
+                bgImage: 'https://images.unsplash.com/photo-1527838832700-5059252407fa?auto=format&fit=crop&w=2074&q=80',
+                overview: 'Experience the magic of Turkey, where East meets West. Discover the hot air balloons of Cappadocia, the historic streets of Istanbul, and the stunning coastlines along the Aegean sea.',
+                price: '₹35,999',
+                days: '6 Days / 5 Nights',
+                included: ['Bosphorus Cruise Tour', 'Cappadocia Hot Air Balloon Ride', '4-Star Boutique Hotels', 'Traditional Turkish Baths (Hammam)', 'All internal transfers']
+            },
+            'disneyland': {
+                title: 'Disneyland',
+                bgImage: 'https://images.unsplash.com/photo-1590144662036-33bf0ebd2c7f?q=80&w=2074&auto=format&fit=crop',
+                overview: 'Step into a world of magic, nostalgia, and thrill. Meet your favorite characters, enjoy world-class rollercoasters, and watch the legendary fireworks display over the castle.',
+                price: '₹55,500',
+                days: '3 Days / 2 Nights',
+                included: ['2-Day Park Hopper Pass', 'Disney Resort Accommodation', 'Early Theme Park Entry', 'Character Dining Breakfast', 'Complimentary Resort Transfers']
+            },
+            'china': {
+                title: 'China',
+                bgImage: 'https://images.unsplash.com/photo-1538428494232-9c0d8a3ab403?q=80&w=2070&auto=format&fit=crop',
+                overview: 'Walk the Great Wall, explore the Forbidden City, and marvel at the Terracotta Army. China offers an unparalleled mix of ancient imperial history and ultra-modern neon cityscapes.',
+                price: '₹42,000',
+                days: '7 Days / 6 Nights',
+                included: ['Great Wall Hiking Experience', "Bullet Train Passes (Beijing to Xi'an)", 'Authentic Peking Duck Dinner', 'Forbidden City Guided Tour', 'Visa Assistance']
+            },
+            'london': {
+                title: 'London',
+                bgImage: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=2070&q=80',
+                overview: 'Experience the royal life in London. Ride the iconic red double-decker buses, visit the Tower of London, and enjoy a ride on the London Eye overlooking the River Thames.',
+                price: '₹65,000',
+                days: '5 Days / 4 Nights',
+                included: ['London Pass (Access to 80+ Attractions)', 'Premium Central London Hotel', 'Thames River Dinner Cruise', 'Oyster Card (Pre-loaded transport)', 'West End Theatre Tickets']
+            },
+            'paris': {
+                title: 'Paris',
+                bgImage: 'https://plus.unsplash.com/premium_photo-1718035557075-5111d9d906d2?q=80&w=2071&auto=format&fit=crop',
+                overview: 'Immerse yourself in the City of Light. Enjoy world-class art at the Louvre, romantic evening walks along the Seine, and a spectacular dinner atop the Eiffel Tower.',
+                price: '₹58,999',
+                days: '5 Days / 4 Nights',
+                included: ['Eiffel Tower Summit Access', 'Louvre Museum Skip-the-line', 'Seine River Cruise', 'Wine & Cheese Tasting Session', 'Accommodation near Champs-Élysées']
+            },
+            'maldives': {
+                title: 'Maldives',
+                bgImage: 'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?q=80&w=2074&auto=format&fit=crop',
+                overview: 'Escape to ultimate luxury in the Indian Ocean. Stay in exclusive overwater villas, swim in crystal clear lagoons, and discover vivid coral reefs just outside your doorstep.',
+                price: '₹85,000',
+                days: '4 Days / 3 Nights',
+                included: ['Private Overwater Villa with Pool', 'All-Inclusive Meals & Drinks', 'Speedboat Airport Transfers', 'Complimentary Scuba Diving Lesson', 'Couples Spa Treatment']
+            },
+            'kyoto': {
+                title: 'Kyoto',
+                bgImage: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?q=80&w=2070&auto=format&fit=crop',
+                overview: 'Find inner peace in the ancient capital of Japan. Stroll through the towering Arashiyama Bamboo Grove, visit serene Zen gardens, and experience a traditional Japanese tea ceremony.',
+                price: '₹72,500',
+                days: '6 Days / 5 Nights',
+                included: ['Traditional Ryokan Stay with Onsen', 'Authentic Tea Ceremony Experience', 'Arashiyama Rickshaw Tour', 'Unlimited Japan Rail (JR) Pass', 'Guided Temple & Shrine Walk']
+            },
+            'santorini': {
+                title: 'Santorini',
+                bgImage: 'https://plus.unsplash.com/premium_photo-1661964149725-fbf14eabd38c?q=80&w=2070&auto=format&fit=crop',
+                overview: 'Experience the magic of Greece. Stay in iconic cliffside white-washed houses, explore volcanic beaches, and witness breathtaking sunsets over the deep blue Aegean sea.',
+                price: '₹79,999',
+                days: '5 Days / 4 Nights',
+                included: ['Cliffside Caldera View Hotel', 'Catamaran Sunset Cruise', 'Wine Tasting Tour in Oia', 'Private Airport Transfers', 'Daily Mediterranean Breakfast']
+            },
+            'newyork': {
+                title: 'New York',
+                bgImage: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?q=80&w=2070&auto=format&fit=crop',
+                overview: 'Take a bite out of the Big Apple. Feel the energy of Times Square, catch a Broadway show, explore Central Park, and take in the view from the Empire State Building.',
+                price: '₹88,000',
+                days: '6 Days / 5 Nights',
+                included: ['Manhattan Skyline Hotel Stay', 'Empire State Building Express Pass', 'Broadway Show Tickets', 'Statue of Liberty Ferry Ride', 'A La Carte Dinner in Times Square']
+            },
+            /* ======== WEST BENGAL PACKAGES ======== */
+            'durgapuja': {
+                title: 'Durga Puja Tour — Kolkata',
+                bgImage: 'https://images.unsplash.com/photo-1768465338149-1a3e2bb6e5fa?q=80&w=1170&auto=format&fit=crop',
+                overview: 'Witness the grandeur of Durga Puja — the world\'s largest street festival! Kolkata transforms into a city of lights, art, and devotion during this spectacular 5-day celebration. Tour the most iconic pandals, enjoy traditional sweets, and experience Bengali culture at its most vibrant.',
+                price: '₹12,999',
+                days: '5 Days / 4 Nights',
+                included: ['Guided Pandal Hopping Tours', 'Traditional Bengali Thali Meals', 'Hotel near Central Kolkata', 'Cultural Evening Show (Dhunuchi Naach)', 'Airport / Station Transfers']
+            },
+            'kolkata': {
+                title: 'Kolkata Heritage Tour',
+                bgImage: 'https://images.unsplash.com/photo-1536421469767-80559bb6f5e1?q=80&w=2070&auto=format&fit=crop',
+                overview: 'Discover Kolkata — the City of Joy. Walk across the iconic Howrah Bridge, explore the British-era architecture of BBD Bagh, enjoy a ferry ride on the Hooghly river, and indulge in authentic street food like kathi rolls and mishti doi.',
+                price: '₹8,999',
+                days: '3 Days / 2 Nights',
+                included: ['Howrah Bridge & Hooghly River Tour', 'Victoria Memorial Museum Entry', 'Park Street & College Street Walk', 'Authentic Bengali Food Trail', 'Rabindra Sarani Cultural Evening']
+            },
+            'darjeeling': {
+                title: 'Darjeeling Hill Tour',
+                bgImage: 'https://images.unsplash.com/photo-1671711847762-b8308b444a42?q=80&w=2070&auto=format&fit=crop',
+                overview: 'Escape to the Queen of the Hills! Wake up to breathtaking sunrise views over the Kanchenjunga peak, ride the legendary Toy Train, sip freshly plucked tea at lush estates, and stroll through vibrant local bazaars packed with Tibetan and Nepali culture.',
+                price: '₹15,499',
+                days: '4 Days / 3 Nights',
+                included: ['UNESCO Toy Train Joy Ride', 'Tiger Hill Sunrise Excursion', 'Tea Garden & Factory Visit', 'Batasia Loop & War Memorial', 'Himalayan Mountaineering Institute Entry']
+            },
+            'victoria': {
+                title: 'Kolkata — Victoria Memorial Package',
+                bgImage: 'https://images.unsplash.com/photo-1600080077823-a44592513861?q=80&w=2070&auto=format&fit=crop',
+                overview: 'Explore the crown jewel of Kolkata — the majestic Victoria Memorial. Built in white Makrana marble, this iconic British-era monument houses a stunning museum of Indian history. Combine it with a visit to the Maidan, Eden Gardens, and Birla Planetarium for a complete Kolkata experience.',
+                price: '₹9,499',
+                days: '2 Days / 1 Night',
+                included: ['Victoria Memorial Guided Tour', 'Eden Gardens Cricket Ground Visit', 'Indian Museum Entry', 'Evening Light & Sound Show', 'City Tram Experience']
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                const destinationId = new URLSearchParams(window.location.search).get('id');
+
+                if (destinationId && destinationsData[destinationId]) {
+                    const data = destinationsData[destinationId];
+
+                    // Title & subtitle
+                    document.querySelector('.dest-title').textContent = data.title;
+                    document.querySelector('.dest-subtitle').textContent = `Your dream vacation to ${data.title} starts here.`;
+
+                    // Background image
+                    document.querySelector('.dest-wrapper').style.backgroundImage =
+                        `linear-gradient(to top, #0a0a0f 25%, rgba(10,10,15,0.2) 70%), url('${data.bgImage}')`;
+
+                    // Overview text
+                    document.querySelector('.dest-main-info p').textContent = data.overview;
+
+                    // Price
+                    document.querySelector('.price-tag').innerHTML = `${data.price} <span>/ person</span>`;
+
+                    // What's Included list
+                    const ul = document.querySelector('.dest-main-info ul');
+                    ul.innerHTML = '';
+                    data.included.forEach(item => {
+                        const li = document.createElement('li');
+                        li.textContent = item;
+                        ul.appendChild(li);
+                    });
+
+                    // Sidebar details
+                    const ps = document.querySelectorAll('.sidebar-details p');
+                    if (ps.length >= 3) {
+                        ps[0].innerHTML = `<i class="fa-regular fa-clock"></i> <strong>${data.days}</strong>`;
+                        ps[1].innerHTML = `<i class="fa-solid fa-plane"></i> <strong>Direct Flights Available</strong>`;
+                        ps[2].innerHTML = `<i class="fa-solid fa-star"></i> <strong>5 Star Ratings</strong>`;
+                    }
+                }
+            } catch (e) {
+                console.error('Destination load error:', e);
+            }
+        });
+    </script>
+</body>
+</html>
