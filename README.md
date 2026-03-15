@@ -14,3 +14,9 @@ This is a simple travel website built as a frontend practice project.
 
 ## Live Demo
 https://sparkly-gnome-524c71.netlify.app/
+## Features
+- Google authentication (Firebase)
+- Contact form with EmailJS
+- User profile dashboard
+- Tour history and upcoming tours
+- Responsive UI
